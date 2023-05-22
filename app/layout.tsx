@@ -27,10 +27,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <div className="max-w-6xl mx-auto py-10 px-4">
             <header>
               <div className="flex items-center justify-between">
-                <ModeToggle />
+                {/*<ModeToggle />*/}
                 <nav className="ml-auto text-sm font-medium space-x-6">
                   <Link href="/">Home</Link>
                   <Link href="/authors">Authors</Link>
+                  <Link href="/account/login">Login</Link>
                   <Link href="/docs">Docs</Link>
                 </nav>
               </div>

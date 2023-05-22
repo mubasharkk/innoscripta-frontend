@@ -7,7 +7,6 @@ import {Button, Form, Container, Row, Col, InputGroup} from "react-bootstrap";
 
 export async function getArticles() {
     const search = useSearchParams();
-    console.log('http://localhost:8080/api/articles?' + search.toString());
     return await fetch('http://localhost:8080/api/articles?' + search.toString())
         .then((response) => response.json());
 }
@@ -17,7 +16,7 @@ export async function getSourcesList() {
         .then((response) => response.json());
 }
 
-const HomePage = async () => {
+export default async function () {
 
     const fields = useSearchParams();
     const articlesResponse = await getArticles();
@@ -32,7 +31,7 @@ const HomePage = async () => {
             <div>
                 {/* This could be a separate component, skipping due to time.*/}
                 <Form>
-                    <Container>
+                    {/*<Container>*/}
                         <Row>
                             <Col><h4>Search</h4></Col>
                         </Row>
@@ -42,9 +41,9 @@ const HomePage = async () => {
                             </Col>
                             <Col>
                                 <Form.Select aria-label="Default select example" name={'source'} defaultValue={fields.get('source')} >
-                                    <option value={''}>Select a news source</option>
+                                    <option key={'source-id-null'} value={''}>Select a news source</option>
                                     {sourcesResponse.data.map((source) => (
-                                        <option value={source.slug}>{source.title}</option>
+                                        <option key={source._id} value={source.slug}>{source.title}</option>
                                     ))}
                                 </Form.Select>
                             </Col>
@@ -61,7 +60,7 @@ const HomePage = async () => {
                             </Col>
 
                         </Row>
-                    </Container>
+                    {/*</Container>*/}
                 </Form>
             </div>
             <hr/>
@@ -80,7 +79,7 @@ const HomePage = async () => {
                                 {article.source.title}
                             </Button>
                         </div>
-                        {article.teaser && <p>{article.teaser}</p>}
+                        {article.teaser && <div dangerouslySetInnerHTML={{__html: article.teaser}}/>}
                         <hr className="my-4"/>
                     </article>
                 ))}
@@ -88,5 +87,3 @@ const HomePage = async () => {
         </section>
     )
 }
-
-export default HomePage;
